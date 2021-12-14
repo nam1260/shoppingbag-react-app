@@ -1,21 +1,33 @@
 
 import React, {useState} from "react";
-import Pagination from "react-js-pagination";
+import ReactPagenate from 'react-paginate'
+import "./Paginator.css";
 
 
 
-const Paginator = ({page,count,setPage}) => {
-
-
+//TODO style 재정의 필요
+const Paginator = ({pageCount,onPageChange}) => {
 
     return (
         <div>
-            <Pagination
-                activePage={page}
-                itemsCountPerPage={5}
-                totalItemsCount={15}
+            <ReactPagenate
+                breakLabel="..."
+                nextLabel="next >"
+                onPageChange={onPageChange}
                 pageRangeDisplayed={5}
-                onChange={setPage}
+                pageCount={pageCount}
+                previousLabel="< previous"
+                renderOnZeroPageCount={null}
+                breakClassName={'page-item'}
+                breakLinkClassName={'page-link'}
+                containerClassName={'pagination'}
+                pageClassName={'page-item'}
+                pageLinkClassName={'page-link'}
+                previousClassName={'page-item'}
+                previousLinkClassName={'page-link'}
+                nextClassName={'page-item'}
+                nextLinkClassName={'page-link'}
+                activeClassName={'active'}
             />
         </div>
     )
