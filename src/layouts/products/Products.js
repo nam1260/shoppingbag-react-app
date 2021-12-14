@@ -1,42 +1,36 @@
 
-import React, { useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import DataManager from "../../managers/DataManager"
-
-//가격/사진/상품 제목
-const ItemList = (props) => {
-    return (
-        <div className="items">
-            {
-                props.itemList.map((item, idx) => {
-                    return (
-                        <div id={"item_" + idx}>
-                            <span id="item_no">{item.item_no}</span>
-                            <span id="item_name">{item.item_name}</span>
-                            <span id="price">{item.price}</span>
-                            <span id="score">{item.score}</span>
-                            <img src={item.detail_image_url}/>
-                            <button >{item.price > 100500 ? "장바구니 담기" : "장바구니 빼기"}</button>
-                        </div>
-                    )
-                })
-            }
-        </div>
-    )
-}
+import ItemList from "./component/ItemList"
+import Paginator from "./component/Paginator"
 
 const Products = () => {
 
-    //TODO useEffect로 item 받아서 그리도록 처리
-  //  let ProductItems = DataManager.getProductItemList();
+    const [itemList, setItemList] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [postsPerPage] = useState(10);
+
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentPosts = itemList.slice(indexOfFirstPost, indexOfLastPost);
 
     useEffect(()=>{
-      //  ProductItems = productItems;
+        const itemList = DataManager.getProductItemList();
+        setItemList(itemList);
     },[]);
 
+
     return (
-        <selction>
-            <ItemList itemList= {DataManager.getProductItemList()}/>
-        </selction>
+        <div>
+            <section>
+                <ItemList itemList={itemList}/>
+            </section>
+            <selction>
+                {/*<Paginator page={currentPosts} count={itemList.length} setPage={setCurrentPage} />*/}
+
+            </selction>
+        </div>
     )
 }
 
