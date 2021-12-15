@@ -40,9 +40,9 @@ const Products = () => {
             <section>
                 <ItemList itemList={currentItems}/>
             </section>
-            <selction>
+            <section>
                 <Paginator pageCount = {pageCount} onPageChange ={handlePageClick}/>
-            </selction>
+            </section>
         </div>
     )
 }
