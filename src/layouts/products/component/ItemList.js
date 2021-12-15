@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import styled from 'styled-components'
+import {useDispatch, useSelector} from "react-redux"
+import {addCart, deleteCart, hasItem} from "../../../store/actions";
 
 
 const ItemList = styled.div`
@@ -47,6 +49,41 @@ const ItemList = styled.div`
 
 //가격/사진/상품 제목
 const ItemListComponent = (props) => {
+
+    const cart = useSelector(store=> store.cartReducer);
+    const dispatch = useDispatch();
+
+    const hasInCart = useCallback((_item)=>{
+        console.log("hasInCart");
+        let hasItem = false;
+        for(let i = 0 ; i < cart.length; i++) {
+            if(_item.item_no === cart[i].item_no) {
+                hasItem = true;
+                break;
+            }
+        }
+
+        return hasItem;
+    },[cart]);
+
+    const onClickBtn = (e, item) => {
+        console.log(item);
+
+        if(hasInCart(item)) {
+            dispatch(deleteCart(item));
+            e.target.innerText = "장바구니 담기"
+        }else {
+            dispatch(addCart(item));
+            e.target.innerText = "장바구니 빼기"
+        }
+
+    };
+
+    useEffect(function(){
+        console.log("cart 추가 시 실행");
+        console.log(cart);
+    },[cart]);
+
     return (
         props && props.itemList ? <ItemList className="items component">
             {
@@ -71,7 +108,7 @@ const ItemListComponent = (props) => {
                                 <span>{item.availableCoupon !==false ? "쿠폰 사용 가능" :""}</span>
                             </div>
 
-                            <button onClick={}>{item.price > 100500 ? "장바구니 담기" : "장바구니 빼기"}</button>
+                            <button onClick={(e)=>{onClickBtn(e,item)}}>{hasInCart(item) ? "장바구니 빼기" : "장바구니 담기"}</button>
                         </div>
                     )
                 })
