@@ -1,10 +1,21 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import DataManager from "../../managers/DataManager"
-import ItemList from "./component/ItemList"
+import ItemListComponent from "./component/ItemList"
 import Paginator from "./component/Paginator"
+import styled from 'styled-components'
+import "./Product.css"
 
 const ITEMS_PER_PAGE = 5;
+
+
+const ProductLayout  = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+`
+
 
 const Products = () => {
 
@@ -36,11 +47,11 @@ const Products = () => {
 
 
     return (
-        <div>
-            <section>
-                <ItemList itemList={currentItems}/>
+        <div className="layout">
+            <section className="container">
+                <ItemListComponent itemList={currentItems}/>
             </section>
-            <section>
+            <section className="container">
                 <Paginator pageCount = {pageCount} onPageChange ={handlePageClick}/>
             </section>
         </div>
