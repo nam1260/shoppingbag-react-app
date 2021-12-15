@@ -9,14 +9,6 @@ import "./Product.css"
 const ITEMS_PER_PAGE = 5;
 
 
-const ProductLayout  = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-
-`
-
-
 const Products = () => {
 
     const [currentItems, setCurrentItems] = useState(null);
@@ -26,8 +18,11 @@ const Products = () => {
     const itemsPerPage = ITEMS_PER_PAGE;
     const items = DataManager.getProductItemList();
 
-    useEffect(() => {
+    useEffect(()=>{
+        console.log("최초 랜더링 시에만 호출");
+    },[]);
 
+    useEffect(() => {
         const endOffset = itemOffset + itemsPerPage;
         console.log(`Loading items from ${itemOffset} to ${endOffset}`);
         setCurrentItems(items.slice(itemOffset, endOffset));

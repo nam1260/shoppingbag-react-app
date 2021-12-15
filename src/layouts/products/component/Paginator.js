@@ -1,6 +1,6 @@
 
 import React, {useState} from "react";
-import ReactPagenate from 'react-paginate'
+import ReactPaginate from 'react-paginate'
 import "./Paginator.css";
 
 
@@ -10,9 +10,7 @@ const Paginator = ({pageCount,onPageChange}) => {
 
     return (
         <div>
-            <ReactPagenate
-                breakLabel="..."
-                nextLabel="next >"
+            <ReactPaginate
                 onPageChange={onPageChange}
                 pageRangeDisplayed={5}
                 pageCount={pageCount}

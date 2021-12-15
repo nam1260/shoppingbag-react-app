@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styled from 'styled-components'
 
 
@@ -71,7 +71,7 @@ const ItemListComponent = (props) => {
                                 <span>{item.availableCoupon !==false ? "쿠폰 사용 가능" :""}</span>
                             </div>
 
-                            <button >{item.price > 100500 ? "장바구니 담기" : "장바구니 빼기"}</button>
+                            <button onClick={}>{item.price > 100500 ? "장바구니 담기" : "장바구니 빼기"}</button>
                         </div>
                     )
                 })
