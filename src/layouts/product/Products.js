@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect, useCallback } from "react";
+import { useHistory } from 'react-router';
 import DataManager from "../../managers/DataManager"
 import ItemListComponent from "./component/ItemList"
 import Paginator from "./component/Paginator"
@@ -10,7 +11,7 @@ const ITEMS_PER_PAGE = 5;
 
 
 const Products = () => {
-
+    const history = useHistory();
     const [currentItems, setCurrentItems] = useState(null);
     const [pageCount, setPageCount] = useState(0);
     const [itemOffset, setItemOffset] = useState(0);
@@ -49,6 +50,7 @@ const Products = () => {
             <section className="container">
                 <Paginator pageCount = {pageCount} onPageChange ={handlePageClick}/>
             </section>
+            <button onClick={()=>{history.push('/cart')}}></button>
         </div>
     )
 }
