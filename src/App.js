@@ -16,7 +16,7 @@ import {BrowserRouter as Router, Route, Redirect, Switch} from 'react-router-dom
 const store = createStore(rootReducer);
 const persistor = persistStore(store);
 
-const Layouts = Styled.div`
+const Content = Styled.div`
     display: inline-block;
 `
 
@@ -28,11 +28,11 @@ function App() {
                     <Switch>
                         <div className="App">
                             <Header/>
-                            <Layouts>
+                            <Content>
                                 <Route path="/product" exact component={Products}/>
                                 <Route path="/cart" exact component={Cart}/>
                                 <Route path="/" exact component={() => <Redirect to="/product"/>}/>
-                            </Layouts>
+                            </Content>
 
                         </div>
                     </Switch>
