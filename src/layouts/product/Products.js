@@ -25,7 +25,6 @@ const Products = () => {
 
     useEffect(() => {
         const endOffset = itemOffset + itemsPerPage;
-        console.log(`Loading items from ${itemOffset} to ${endOffset}`);
         setCurrentItems(items.slice(itemOffset, endOffset));
         setPageCount(Math.ceil(items.length / itemsPerPage));
 
@@ -50,7 +49,6 @@ const Products = () => {
             <section className="container">
                 <Paginator pageCount = {pageCount} onPageChange ={handlePageClick}/>
             </section>
-            <button onClick={()=>{history.push('/cart')}}></button>
         </div>
     )
 }

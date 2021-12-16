@@ -54,7 +54,6 @@ const ItemListComponent = (props) => {
     const dispatch = useDispatch();
 
     const hasInCart = useCallback((_item)=>{
-        console.log("hasInCart");
         let hasItem = false;
         for(let i = 0 ; i < cart.length; i++) {
             if(_item.item_no === cart[i].item_no) {
@@ -80,7 +79,6 @@ const ItemListComponent = (props) => {
     };
 
     useEffect(function(){
-        console.log("cart 추가 시 실행");
         console.log(cart);
     },[cart]);
 
