@@ -1,12 +1,26 @@
 import React, { useState, useEffect, useCallback } from "react";
+import Styled from "styled-components"
 import DataManager from "../../managers/DataManager"
 import {useDispatch, useSelector} from "react-redux"
 
-import MenuTitle from "./components/MenuTItle"
+import MenuTitle from "./components/MenuTitle"
+import CartItem from "./components/CartItem"
 import "./Cart.css";
+import ItemListComponent from "../product/component/ItemList";
 
 
-const CART_TITLE_TEXT = "나의 장바구니 목록";
+const CART_TITLE_TEXT = "MY SHOPPING BAG";
+
+const CartWrapper = Styled.div`
+    position: relative;
+    width: 1200px;
+    
+    & > div {
+        position: relative;
+        text-align: left;
+    }
+`
+
 
 const Cart = () => {
 
@@ -17,12 +31,7 @@ const Cart = () => {
     useEffect(()=>{
 
          setCartItemList(cart && cart.length > 0 ? cart.map((item) =>{
-            return <div>
-                <img src={item.detail_img_url}/>
-                <span>{item.item_name}</span>
-                <span id="price">{item.price}</span>
-                <span>{item.score}</span>
-            </div>
+            return <CartItem item={item}/>
         }) :  <div>장바구니 제품이 없습니다</div>)
 
     },[cart]);
@@ -30,10 +39,11 @@ const Cart = () => {
     return (
         <div className="layout">
             <section className="container">
-                <div>
-                    <MenuTitle text={CART_TITLE_TEXT}/>
-                </div>
-                {cartItemList}
+                <CartWrapper>
+                    <div className="title-wrapper"><MenuTitle text={CART_TITLE_TEXT}/></div>
+                    <div>{cartItemList}</div>
+                </CartWrapper>
+
             </section>
         </div>
     )

@@ -1,5 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
 import Header from "./layouts/Header"
 import Products from './layouts/product/Products'
 import Cart from './layouts/cart/Cart'
@@ -17,6 +17,7 @@ const store = createStore(rootReducer);
 const persistor = persistStore(store);
 
 const Content = Styled.div`
+    position: relative;
     display: inline-block;
 `
 
@@ -29,8 +30,8 @@ function App() {
                         <div className="App">
                             <Header/>
                             <Content>
-                                <Route path="/product" exact component={Products}/>
                                 <Route path="/cart" exact component={Cart}/>
+                                <Route path="/product" exact component={Products}/>
                                 <Route path="/" exact component={() => <Redirect to="/product"/>}/>
                             </Content>
 
