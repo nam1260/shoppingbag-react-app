@@ -22,7 +22,7 @@ function Header() {
 
                     <div>
                         <span id='shoppingCart-count'>{cart.length}</span>
-                        <img id="shoppingCart" onClick={(e)=>{console.log(e); history.push('/cart')}} />
+                        <img id="shoppingCart" onClick={(e)=>{history.push('/cart')}} />
                     </div>
                 </div>
             </section>
