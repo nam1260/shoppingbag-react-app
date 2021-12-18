@@ -96,7 +96,6 @@ const CartItem = ({item,checkedItemHandler}) =>{
 
     //수량 초기화
     useEffect(()=>{
-        console.log("asdjasd")
         setItem();
     },[count,bChecked])
 

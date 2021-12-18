@@ -19,7 +19,7 @@ const StyledPayment = Styled.div`
         box-sizing: border-box;
         
     }
-    & > div > span {
+    & > div  span {
         font-size: 22px;
         font-weight: 700;
     } 
@@ -57,7 +57,8 @@ const PaymentDetail = ({products}) => {
 
     //결제 필요 금액
     const [totalPrice,setTotalPrice] = useState(0);
-    const [coupons,setCoupon] = useState([])
+    const [coupons,setCoupon] = useState([]);
+    const [isAvailableCoupon, setIsAvailableCoupon] = useState(false);
     const calculateTotalPrice = () => {
 
         let totalPrice = 0;
@@ -67,22 +68,56 @@ const PaymentDetail = ({products}) => {
         setTotalPrice(totalPrice);
     }
 
+    const calculateDiscountPrice = () => {
+
+    }
+
+    const checkCouponValidation = () =>{
+        console.log(products)
+        let validProduct = products.filter(product=> product.availableCoupon !== false);
+        let result = false;
+        if(validProduct.length > 0) {
+            result = true;
+        }
+        console.log(validProduct);
+        setIsAvailableCoupon(result);
+
+    }
 
     useEffect(()=> {
-        setCoupon(DataManager.getCoupons());
+        setCoupon(DataManager.getCoupons().map((coupon)=>{
+            return <option value={coupon.type}>{coupon.title}</option>
+        }));
     },[]);
 
     useEffect(() => {
         calculateTotalPrice();
+        checkCouponValidation();
     },[products]);
+
+
+    useEffect(() => {
+        calculateDiscountPrice();
+    },[]);
 
     return (
         <StyledPayment>
-          <div>
-            <span>{totalPrice.toLocaleString()}원</span>
-          </div>
             <div>
-                    c
+                <span>{totalPrice.toLocaleString()}원</span>
+            </div>
+            <div>
+                <select>
+                    <option value="none">====쿠폰 선택====</option>
+                    {
+                        (isAvailableCoupon && coupons.length > 0 )?
+                            coupons
+                            : ""
+                    }
+                </select>
+                <div id="discount-price"><span>1원</span></div>
+            </div>
+            <div>
+                <span>ㅁ2</span>
             </div>
 
         </StyledPayment>

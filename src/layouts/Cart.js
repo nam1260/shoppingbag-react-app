@@ -57,14 +57,12 @@ const Cart = () => {
 
 
     const checkedItemHandler = (() => {
-            console.log("asf;ajsasfasf");
             let filteredItem = cart.filter(item => item.bChecked);
             setValidItems(filteredItem)
         }
     );
 
     useEffect(()=>{
-        console.log("setCartItemList");
          setCartItemList(cart.map((item) =>{
             return <CartItem checkedItemHandler={checkedItemHandler} item={item}/>
         }))
