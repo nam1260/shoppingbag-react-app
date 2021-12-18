@@ -1,11 +1,10 @@
-
+import '../App.css';
 import React, { useState, useEffect, useCallback } from "react";
 import { useHistory } from 'react-router';
 import DataManager from "../managers/DataManager"
 import ItemListComponent from "../components/ItemList"
 import Paginator from "../components/Paginator"
 import styled from 'styled-components'
-import "./Product.css"
 
 const ITEMS_PER_PAGE = 5;
 

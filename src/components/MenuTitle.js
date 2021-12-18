@@ -7,6 +7,7 @@ const Title = Styled.div`
         
     width: 100%;
     height: 30px;
+    margin-top: 20px;
     border-bottom: 3px solid black;
     text-align: left;
     & > span {

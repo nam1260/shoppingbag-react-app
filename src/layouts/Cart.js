@@ -1,13 +1,14 @@
 import '../App.css';
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Styled from "styled-components"
 import {useDispatch, useSelector} from "react-redux"
 
 import MenuTitle from "../components/MenuTitle"
 import CartItem from "../components/CartItem"
-
+import Payment from "../components/Payment"
 
 const CART_TITLE_TEXT = "MY SHOPPING BAG";
+const PAYMENT_TITLE_TEXT = "PAYMENT";
 
 const StyledCart = Styled.div`
     position: relative;
@@ -52,18 +53,21 @@ const Cart = () => {
 
     const cart = useSelector(store=> store.cartReducer);
     const [cartItemList, setCartItemList] = useState([]);
+    const [validItems, setValidItems] = useState([]);
 
-    const checkedItemHandler = () => {
-        let a = cart.filter((item)=> item.bChecked);
-    };
 
+    const checkedItemHandler = (() => {
+            console.log("asf;ajsasfasf");
+            let filteredItem = cart.filter(item => item.bChecked);
+            setValidItems(filteredItem)
+        }
+    );
 
     useEffect(()=>{
-         setCartItemList(cart && cart.length > 0 ? cart.map((item) =>{
-            return <CartItem
-                checkedItemHandler = {checkedItemHandler}
-                item={item}/>
-        }) :  <div>장바구니 제품이 없습니다</div>)
+        console.log("setCartItemList");
+         setCartItemList(cart.map((item) =>{
+            return <CartItem checkedItemHandler={checkedItemHandler} item={item}/>
+        }))
 
     },[cart]);
 
@@ -71,19 +75,30 @@ const Cart = () => {
         <div className="layout">
             <section className="container">
                 <StyledCart>
-                    <div><MenuTitle text={CART_TITLE_TEXT}/></div>
-                    <div>
-                        <StyledCartInfo>
-                            <div id="check-box"> <input type="checkbox" value="전체선택" name="전체선택"/></div>
-                            <div id="prod-info">상품 정보</div>
-                            <div id="order-cnt">수량</div>
-                            <div id="price">주문금액</div>
-                        </StyledCartInfo>
-                    </div>
-                    <div>{cartItemList}</div>
-                </StyledCart>
+                    <MenuTitle text={CART_TITLE_TEXT}/>
 
+                    {cartItemList.length > 0 ?
+                        <div>
+                            <StyledCartInfo>
+                                <div id="check-box"> <input type="checkbox" value="전체선택" name="전체선택"/></div>
+                                <div id="prod-info">상품 정보</div>
+                                <div id="order-cnt">수량</div>
+                                <div id="price">주문금액</div>
+
+                            </StyledCartInfo>
+                            <div>{cartItemList}</div>
+                        </div>
+                         : <div>내 쇼핑백이 비어있습니다. 쇼핑바로가기</div>
+                        }
+                </StyledCart>
             </section>
+
+            <selection className="container">
+                <div>
+                    <MenuTitle text={PAYMENT_TITLE_TEXT}/>
+                    <Payment products={validItems}/>
+                </div>
+            </selection>
         </div>
     )
 }
