@@ -64,54 +64,62 @@ const StyledItem = Styled.div`
 
 const CartItem = ({item,checkedItemHandler}) =>{
 
-    const [bChecked, setChecked] = useState(false);
+    const [bChecked, setChecked] = useState(true);
     const [count, setCount] = useState(1);
     const [price, setPrice] = useState(item.price);
-    const checkHandler = () => {
-        setChecked(!bChecked);
-        item.bChecked = !bChecked;
-    };
 
-    const onClickCntBtn = ((e)=>{
+    const onCheckedBox =() => {
+        setChecked(!bChecked);
+
+    }
+    const onClickCnt = (e) => {
         let currentCnt = count;
         let value = e.target.innerText;
+
         if(value === "+") {
-            currentCnt ++;
-        }else {
+            currentCnt++
+        }
+        else {
             if(currentCnt < 2) return;
             currentCnt--;
         }
         setCount(currentCnt);
-        item.cnt = currentCnt;
+        setPrice(currentCnt * item.price);
 
-        setPrice(item.cnt * item.price)
-    });
+    }
+
+    const setItem =()=>{
+        item.cnt = count;
+        item.bChecked = bChecked;
+        checkedItemHandler();
+    }
 
     //수량 초기화
     useEffect(()=>{
-        checkHandler();
-    },[])
+        console.log("asdjasd")
+        setItem();
+    },[count,bChecked])
 
     return(
         <StyledItem>
             <div className="check-box">
-                <input type="checkbox" checked={bChecked} onChange={(e)=>checkHandler(e)}/>
+                <input type="checkbox" checked={bChecked} onChange={onCheckedBox}/>
             </div>
             <div className="prod-info">
                 <div>
                     <img src={item.detail_image_url}/>
                     <div className='prod-info-detail'>
                         <div id='item-name'>{item.item_name}</div>
-                        <div id='item-price' >{item.price.toLocaleString()}</div>
+                        <div id='item-price' >{item.price.toLocaleString()}원</div>
                     </div>
                 </div>
             </div>
 
             <div className="prod-cnt">
                 <div>
-                    <button onClick = {onClickCntBtn} >-</button>
+                    <button onClick = {onClickCnt} >-</button>
                     <input type="text" value={count}/>
-                    <button onClick = {onClickCntBtn} >+</button>
+                    <button onClick = {onClickCnt} >+</button>
                 </div>
             </div>
 
