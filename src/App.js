@@ -1,8 +1,8 @@
 import './App.css';
 import React from 'react';
 import Header from "./layouts/Header"
-import Products from './layouts/product/Products'
-import Cart from './layouts/cart/Cart'
+import Products from './layouts/Products'
+import Cart from './layouts/Cart'
 import Styled from "styled-components"
 import { Provider } from "react-redux";
 import { createStore } from "redux";
