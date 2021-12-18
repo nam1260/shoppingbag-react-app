@@ -71,6 +71,10 @@ const ItemListComponent = (props) => {
             dispatch(deleteCart(item));
             e.target.innerText = "장바구니 담기"
         }else {
+            if(cart.length > 2) {
+                alert("장바구니 추가 가능 갯수는 최대 3개입니다");
+                return ;
+            }
             dispatch(addCart(item));
             e.target.innerText = "장바구니 빼기"
         }
@@ -89,7 +93,7 @@ const ItemListComponent = (props) => {
                                     <span>{item.item_name}</span>
                                 </div>
                                 <div id="price">
-                                    <span id="price">{item.price}</span>
+                                    <span id="price">{(item.price).toLocaleString()}원</span>
                                 </div>
                                 <div id="score">
                                     <div>하트</div>
