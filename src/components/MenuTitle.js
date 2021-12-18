@@ -11,6 +11,7 @@ const Title = Styled.div`
     text-align: left;
     & > span {
         font-size: 25px;
+        font-weight: 700;
     }
 
 `
