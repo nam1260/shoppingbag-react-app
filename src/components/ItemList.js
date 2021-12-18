@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import styled from 'styled-components'
 import {useDispatch, useSelector} from "react-redux"
-import {addCart, deleteCart, hasItem} from "../../../store/actions";
+import {addCart, deleteCart, hasItem} from "../store/actions/index";
 
 
 const ItemList = styled.div`
@@ -46,7 +46,6 @@ const ItemList = styled.div`
   
 `
 
-
 //가격/사진/상품 제목
 const ItemListComponent = (props) => {
 
@@ -77,10 +76,6 @@ const ItemListComponent = (props) => {
         }
 
     };
-
-    useEffect(function(){
-        console.log(cart);
-    },[cart]);
 
     return (
         props && props.itemList ? <ItemList className="items component">
