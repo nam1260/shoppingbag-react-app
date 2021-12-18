@@ -54,13 +54,19 @@ const StyledItem = Styled.div`
         color: rgb(255,72,0);
     }
     
+    .price span {
+    
+        font-size: 26px;
+        font-weight: 800;
+    }
+    
 `
 
 const CartItem = ({item,checkedItemHandler}) =>{
 
     const [bChecked, setChecked] = useState(false);
     const [count, setCount] = useState(1);
-    const [itemPrice, setItemPrice] = useState(0);
+    const [price, setPrice] = useState(item.price);
     const checkHandler = () => {
         setChecked(!bChecked);
         item.bChecked = !bChecked;
@@ -77,9 +83,10 @@ const CartItem = ({item,checkedItemHandler}) =>{
         }
         setCount(currentCnt);
         item.cnt = currentCnt;
+
+        setPrice(item.cnt * item.price)
     });
 
-    //초기 세팅은 true 로 셜정
     //수량 초기화
     useEffect(()=>{
         checkHandler();
@@ -95,7 +102,7 @@ const CartItem = ({item,checkedItemHandler}) =>{
                     <img src={item.detail_image_url}/>
                     <div className='prod-info-detail'>
                         <div id='item-name'>{item.item_name}</div>
-                        <div id='item-price' >{item.price}</div>
+                        <div id='item-price' >{item.price.toLocaleString()}</div>
                     </div>
                 </div>
             </div>
@@ -108,9 +115,9 @@ const CartItem = ({item,checkedItemHandler}) =>{
                 </div>
             </div>
 
-            <div id="price">
+            <div className="price">
                 <div>
-                    <span>{itemPrice}</span>
+                    <span>{price.toLocaleString()}원</span>
                 </div>
             </div>
 

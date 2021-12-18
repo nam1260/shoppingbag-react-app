@@ -1,10 +1,10 @@
+import '../App.css';
 import React, { useState, useEffect, useCallback } from "react";
 import Styled from "styled-components"
 import {useDispatch, useSelector} from "react-redux"
 
 import MenuTitle from "../components/MenuTitle"
 import CartItem from "../components/CartItem"
-import "./Cart.css";
 
 
 const CART_TITLE_TEXT = "MY SHOPPING BAG";
