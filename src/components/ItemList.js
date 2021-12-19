@@ -111,15 +111,16 @@ const ItemListComponent = ({itemList}) => {
     const cart = useSelector(store=> store.cartReducer);
     const dispatch = useDispatch();
 
-    const hasInCart = useCallback((_item)=>{
+    const hasInCart = useCallback((item)=>{
         let hasItem = false;
-        for(let i = 0 ; i < cart.length; i++) {
-            if(_item.item_no === cart[i].item_no) {
+
+        let i =0;
+        for(i; i < cart.length; i++) {
+            if(item.item_no === cart[i].item_no) {
                 hasItem = true;
                 break;
             }
         }
-
         return hasItem;
     },[cart]);
 
