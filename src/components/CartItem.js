@@ -53,6 +53,10 @@ const StyledItem = Styled.div`
         font-size: 16px;
         color: rgb(255,72,0);
     }
+     .prod-info-detail #item-coupon {
+        font-weight: 600;
+        color: blue;
+     }
     
     .price span {
     
@@ -62,11 +66,12 @@ const StyledItem = Styled.div`
     
 `
 
-const CartItem = ({item,checkedItemHandler}) =>{
+const CartItem = ({item,checkedItemHandler,allChecked}) =>{
 
     const [bChecked, setChecked] = useState(true);
     const [count, setCount] = useState(1);
     const [price, setPrice] = useState(item.price);
+
 
     const onCheckedBox =() => {
         setChecked(!bChecked);
@@ -97,7 +102,11 @@ const CartItem = ({item,checkedItemHandler}) =>{
     //수량 초기화
     useEffect(()=>{
         setItem();
-    },[count,bChecked])
+    },[count,bChecked]);
+
+    useEffect(() =>{
+        setChecked(allChecked)
+    },[allChecked]);
 
     return(
         <StyledItem>
@@ -109,6 +118,7 @@ const CartItem = ({item,checkedItemHandler}) =>{
                     <img src={item.detail_image_url}/>
                     <div className='prod-info-detail'>
                         <div id='item-name'>{item.item_name}</div>
+                        <div id='item-coupon'>{item.availableCoupon === false ? "[할인 제외 상품]":""}</div>
                         <div id='item-price' >{item.price.toLocaleString()}원</div>
                     </div>
                 </div>

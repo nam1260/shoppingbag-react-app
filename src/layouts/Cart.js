@@ -54,7 +54,12 @@ const Cart = () => {
     const cart = useSelector(store=> store.cartReducer);
     const [cartItemList, setCartItemList] = useState([]);
     const [validItems, setValidItems] = useState([]);
+    const [allChecked, setAllChecked] = useState(true);
 
+
+    const onCheckedAll =() => {
+        setAllChecked(!allChecked);
+    }
 
     const checkedItemHandler = (() => {
             let filteredItem = cart.filter(item => item.bChecked);
@@ -64,10 +69,10 @@ const Cart = () => {
 
     useEffect(()=>{
          setCartItemList(cart.map((item) =>{
-            return <CartItem checkedItemHandler={checkedItemHandler} item={item}/>
+            return <CartItem allChecked = {allChecked} checkedItemHandler={checkedItemHandler} item={item}/>
         }))
 
-    },[cart]);
+    },[cart,allChecked]);
 
     return (
         <div className="layout">
@@ -78,7 +83,7 @@ const Cart = () => {
                     {cartItemList.length > 0 ?
                         <div>
                             <StyledCartInfo>
-                                <div id="check-box"> <input type="checkbox" value="전체선택" name="전체선택"/></div>
+                                <div id="check-box"> <input type="checkbox" checked={allChecked} onChange={onCheckedAll}/></div>
                                 <div id="prod-info">상품 정보</div>
                                 <div id="order-cnt">수량</div>
                                 <div id="price">주문금액</div>
@@ -86,7 +91,7 @@ const Cart = () => {
                             </StyledCartInfo>
                             <div>{cartItemList}</div>
                         </div>
-                         : <div>내 쇼핑백이 비어있습니다. 쇼핑바로가기</div>
+                        : <div>쇼핑백에 상품이 없습니다.</div>
                         }
                 </StyledCart>
             </section>
