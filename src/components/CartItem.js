@@ -75,7 +75,6 @@ const CheckBox = ({bChecked, onCheckedBox}) => {
 }
 
 const ProductInfo = ({item}) => {
-    console.log(item);
     return (
         <div className="prod-info">
             <div>
@@ -90,13 +89,13 @@ const ProductInfo = ({item}) => {
     )
 };
 
-const ProductCnt = ({onclick, value}) => {
+const ProductCnt = ({onClick, value}) => {
     return (
         <div className="prod-cnt">
             <div>
-                <button onClick={onclick}>-</button>
+                <button onClick={onClick}>-</button>
                 <input type="text" value={value}/>
-                <button onClick={onclick}>+</button>
+                <button onClick={onClick}>+</button>
             </div>
         </div>
     )
@@ -157,7 +156,7 @@ const CartItem = ({item,checkedItemHandler,allChecked}) =>{
 
     return(
         <StyledItem>
-            <CheckBox bChecked={bChecked} onCheckeBox={onCheckedBox}/>
+            <CheckBox bChecked={bChecked} onCheckedBox={onCheckedBox}/>
             <ProductInfo item={item}/>
             <ProductCnt onClick={onClickCnt} value={count}/>
             <Price price={price}/>
