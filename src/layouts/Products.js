@@ -8,7 +8,11 @@ import styled from 'styled-components'
 
 const ITEMS_PER_PAGE = 5;
 
-
+/**
+ * 상품 관리 페이지
+ * @returns {*}
+ * @constructor
+ */
 const Products = () => {
     const [productList, setProductList] = useState([]);
     const [currentProducts, setCurrentProducts] = useState([]);
@@ -28,7 +32,6 @@ const Products = () => {
     }, [itemOffset,productList]);
 
 
-    // Invoke when user click to request another page.
     const handlePageClick = (event) => {
         const newOffset = (event.selected * itemsPerPage) % productList.length;
         setItemOffset(newOffset);

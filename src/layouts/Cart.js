@@ -49,6 +49,11 @@ const StyledCartInfo = Styled.div`
 `
 
 
+/**
+ * 장바구니 관리 페이지
+ * @returns {*}
+ * @constructor
+ */
 const Cart = () => {
 
     const cart = useSelector(store=> store.cartReducer);

@@ -15,6 +15,11 @@ const MyCart = Styled.div`
    }
 `
 
+/**
+ * 컴포넌트 헤더
+ * @returns {*}
+ * @constructor
+ */
 function Header() {
     const history = useHistory();
     const cart = useSelector(store=> store.cartReducer);
