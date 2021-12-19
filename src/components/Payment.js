@@ -179,7 +179,7 @@ const PaymentDetail = ({products}) => {
 
     useEffect(() => {
         calculateDiscountPrice(currentCoupon)
-    },[products,currentCoupon]);
+    },[products,currentCoupon,isAvailableCoupon]);
 
     useEffect(() =>{
         calculatePaymentPrice();
