@@ -65,12 +65,15 @@ const ItemList = styled.div`
      padding: 0.375rem 0.75rem;
      border-radius: 0.25rem;
      font-size: 1rem;
+     font-weight: 600;
      line-height: 1.5;
      border: 1px solid grey;
      color: black;
      background: white;
   }
   button:hover {
+    color: white;
+    background: black;
     cursor: pointer
   }
   

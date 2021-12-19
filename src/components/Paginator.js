@@ -20,20 +20,19 @@ const StyledPaginator = Styled.div`
     padding: 6px 12px;
     line-height: 1.42857143;
     text-decoration: none;
-    color: #000000;
+    font-size: 3rem;
+    color: grey;
 
 }
 
 .pagination>li.active>a {
     color: #000000;
-    font-size: 1.5rem;
     font-weight: 600;
 }
 
 /* Style the active class (and buttons on mouse-over) */
 .pagination > li > a:hover {
-    background-color:  #000000;
-    color: white;
+    cursor:pointer;
 }
 .pagination > li:first-child > a,
 .pagination > li:first-child > span {
