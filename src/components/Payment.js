@@ -3,6 +3,13 @@ import Styled from "styled-components"
 
 import DataManager from "../managers/DataManager"
 
+
+const COUPON_TYPE = {
+    AMOUNT : "amount",
+    RATE : "rate",
+    NONE: "none"
+}
+
 const StyledPayment = Styled.div`
     position: relative;
     width: 100%;
@@ -13,16 +20,23 @@ const StyledPayment = Styled.div`
     
     & > div {
         display: table-cell;
-        width: 35%;
+        width: 25%;
         text-align: center;
         vertical-align: middle;
         box-sizing: border-box;
-        
     }
     & > div  span {
         font-size: 22px;
         font-weight: 700;
     } 
+    
+    #discountPrice span {
+        color: rgb(255,72,0);
+    }
+    
+    #paymentPrice span {
+        color: blue;
+    }
 
 `
 
@@ -31,6 +45,9 @@ const PaymentTitle = ()=>{
         <StyledPayment>
             <div>
                 <span>총 주문금액</span>
+            </div>
+            <div>
+                <span>쿠폰 선택</span>
             </div>
             <div>
                 <span>총 할인금액</span>
@@ -44,82 +61,140 @@ const PaymentTitle = ()=>{
     )
 };
 
-const getCoupons = () => {
+
+const CouponSelectBox = ({isAvailableCoupon,changedCouponHandler}) => {
+
+    const [couponElm,setCouponElm] = useState([]);
+    const [coupons,setCoupons] = useState([]);
+    useEffect(()=> {
+        let coupons = DataManager.getCoupons();
+        setCouponElm(coupons.map((coupon)=>{
+            return <option value={coupon.type}>{coupon.title}</option>
+        }));
+
+        setCoupons(coupons);
+    },[]);
+
+    const onChangeCoupon=(e)=>{
+         let selectedCoupon = coupons.filter((coupon)=>{
+             return coupon.type === e.target.value
+         })
+
+        changedCouponHandler(selectedCoupon[0]);
+
+    }
+
     return (
-        <select>
+        <div>
+            <select onChange = {onChangeCoupon}>
+                <option value="none">====쿠폰 선택====</option>
+                {
+                    (isAvailableCoupon && couponElm.length > 0 )?
+                        couponElm
+                        : ""
+                }
+            </select>
+        </div>
 
-        </select>
     )
+}
 
+const PriceBox = ({id, price}) => {
+    return (
+        <div id={id}>
+            <span>{price > 0 ? price.toLocaleString() : 0}원</span>
+        </div>
+    )
 }
 
 const PaymentDetail = ({products}) => {
 
     //결제 필요 금액
     const [totalPrice,setTotalPrice] = useState(0);
-    const [coupons,setCoupon] = useState([]);
     const [isAvailableCoupon, setIsAvailableCoupon] = useState(false);
+    const [discountPrice, setDiscountPrice] = useState(0);
+    const [paymentPrice, setPaymentPrice] = useState(0);
+    const [currentCoupon, setCurrentCoupon] = useState(null);
+
     const calculateTotalPrice = () => {
 
         let totalPrice = 0;
-        for (let i = 0; i < products.length; i++) {
-            totalPrice += products[i].price * products[i].cnt;
-        }
+
+        products.forEach((product)=>{
+            totalPrice += (product.price * product.cnt)
+        });
+
         setTotalPrice(totalPrice);
     }
 
-    const calculateDiscountPrice = () => {
+    const calculateDiscountPrice = (selectedCoupon) => {
+        let amount = 0;
+        if(isAvailableCoupon && selectedCoupon && selectedCoupon.type !== COUPON_TYPE.NONE) {
+            //쿠폰 할인 적용
+            const targetProduct = products.filter(product=> product.availableCoupon !== false);
 
+            switch (selectedCoupon.type){
+                case COUPON_TYPE.AMOUNT:
+                    amount = selectedCoupon.discountAmount;
+                    break;
+                case COUPON_TYPE.RATE:
+                    let sum = 0;
+
+                    targetProduct.forEach((product)=>{
+                        sum += (product.price * product.cnt);
+                    });
+                    amount = sum/selectedCoupon.discountRate;
+
+                    break;
+                default:
+                    break;
+            }
+        }else {
+            selectedCoupon = null;
+        }
+        setCurrentCoupon(selectedCoupon);
+        setDiscountPrice(Math.floor(amount))
     }
 
     const checkCouponValidation = () =>{
-        console.log(products)
         let validProduct = products.filter(product=> product.availableCoupon !== false);
         let result = false;
         if(validProduct.length > 0) {
             result = true;
         }
-        console.log(validProduct);
         setIsAvailableCoupon(result);
+        if(!result) {
+          setCurrentCoupon(null);
+        }
 
+        console.log("checkCouponValidation = "+result);
     }
 
-    useEffect(()=> {
-        setCoupon(DataManager.getCoupons().map((coupon)=>{
-            return <option value={coupon.type}>{coupon.title}</option>
-        }));
-    },[]);
+    const calculatePaymentPrice = () =>{
+        setPaymentPrice(totalPrice - discountPrice);
+    }
 
     useEffect(() => {
         calculateTotalPrice();
         checkCouponValidation();
     },[products]);
 
-
     useEffect(() => {
-        calculateDiscountPrice();
-    },[]);
+        calculateDiscountPrice(currentCoupon)
+    },[products,currentCoupon]);
+
+    useEffect(() =>{
+        calculatePaymentPrice();
+    },[totalPrice,discountPrice]);
 
     return (
         <StyledPayment>
-            <div>
-                <span>{totalPrice.toLocaleString()}원</span>
-            </div>
-            <div>
-                <select>
-                    <option value="none">====쿠폰 선택====</option>
-                    {
-                        (isAvailableCoupon && coupons.length > 0 )?
-                            coupons
-                            : ""
-                    }
-                </select>
-                <div id="discount-price"><span>1원</span></div>
-            </div>
-            <div>
-                <span>ㅁ2</span>
-            </div>
-
+            <PriceBox price = {totalPrice}/>
+            <CouponSelectBox
+                isAvailableCoupon={isAvailableCoupon}
+                changedCouponHandler={calculateDiscountPrice}/>
+            <PriceBox id ="discountPrice" price ={discountPrice}/>
+            <PriceBox id ="paymentPrice" price ={paymentPrice}/>
         </StyledPayment>
     )
 
