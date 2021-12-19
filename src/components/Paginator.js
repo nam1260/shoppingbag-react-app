@@ -12,7 +12,6 @@ const StyledPaginator = Styled.div`
 }
 .pagination > li {
     list-style: none;
-    border: 0.9px solid;
 }
 .pagination > li > a,
 .pagination > li > span {
@@ -21,21 +20,19 @@ const StyledPaginator = Styled.div`
     padding: 6px 12px;
     line-height: 1.42857143;
     text-decoration: none;
-    color: #2c689c;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    margin-left: -1px;
+    color: #000000;
+
 }
 
 .pagination>li.active>a {
-    color: #fff;
-    background-color: #218838;
-    border-color: #1e7e34;
+    color: #000000;
+    font-size: 1.5rem;
+    font-weight: 600;
 }
 
 /* Style the active class (and buttons on mouse-over) */
 .pagination > li > a:hover {
-    background-color:  #218838;
+    background-color:  #000000;
     color: white;
 }
 .pagination > li:first-child > a,
