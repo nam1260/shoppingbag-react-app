@@ -66,6 +66,53 @@ const StyledItem = Styled.div`
     
 `
 
+const CheckBox = ({bChecked, onCheckedBox}) => {
+    return (
+        <div className="check-box">
+            <input type="checkbox" checked={bChecked} onChange={onCheckedBox}/>
+        </div>
+    )
+}
+
+const ProductInfo = ({item}) => {
+    console.log(item);
+    return (
+        <div className="prod-info">
+            <div>
+                <img src={item.detail_image_url}/>
+                <div className='prod-info-detail'>
+                    <div id='item-name'>{item.item_name}</div>
+                    <div id='item-coupon'>{item.availableCoupon === false ? "[할인 제외 상품]":""}</div>
+                    <div id='item-price' >{item.price ? item.price.toLocaleString() : 0}원</div>
+                </div>
+            </div>
+        </div>
+    )
+};
+
+const ProductCnt = ({onclick, value}) => {
+    return (
+        <div className="prod-cnt">
+            <div>
+                <button onClick={onclick}>-</button>
+                <input type="text" value={value}/>
+                <button onClick={onclick}>+</button>
+            </div>
+        </div>
+    )
+}
+
+const Price = ({price}) => {
+    return (
+        <div className="price">
+            <div>
+                <span>{price.toLocaleString()}원</span>
+            </div>
+        </div>
+    )
+}
+
+
 const CartItem = ({item,checkedItemHandler,allChecked}) =>{
 
     const [bChecked, setChecked] = useState(true);
@@ -110,34 +157,10 @@ const CartItem = ({item,checkedItemHandler,allChecked}) =>{
 
     return(
         <StyledItem>
-            <div className="check-box">
-                <input type="checkbox" checked={bChecked} onChange={onCheckedBox}/>
-            </div>
-            <div className="prod-info">
-                <div>
-                    <img src={item.detail_image_url}/>
-                    <div className='prod-info-detail'>
-                        <div id='item-name'>{item.item_name}</div>
-                        <div id='item-coupon'>{item.availableCoupon === false ? "[할인 제외 상품]":""}</div>
-                        <div id='item-price' >{item.price.toLocaleString()}원</div>
-                    </div>
-                </div>
-            </div>
-
-            <div className="prod-cnt">
-                <div>
-                    <button onClick = {onClickCnt} >-</button>
-                    <input type="text" value={count}/>
-                    <button onClick = {onClickCnt} >+</button>
-                </div>
-            </div>
-
-            <div className="price">
-                <div>
-                    <span>{price.toLocaleString()}원</span>
-                </div>
-            </div>
-
+            <CheckBox bChecked={bChecked} onCheckeBox={onCheckedBox}/>
+            <ProductInfo item={item}/>
+            <ProductCnt onClick={onClickCnt} value={count}/>
+            <Price price={price}/>
         </StyledItem>
     )
 };
