@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import Styled from "styled-components"
 
 import DataManager from "../managers/DataManager"
-
+import * as Strings from "../resources/Strings"
 
 const COUPON_TYPE = {
     AMOUNT : "amount",
@@ -40,22 +40,22 @@ const StyledPayment = Styled.div`
 
 `
 
-const PaymentTitle = ()=>{
+const PaymentDesc = ()=>{
     return (
         <StyledPayment>
             <div>
-                <span>총 주문금액</span>
+                <span>{Strings.TEXT_TOTAL_PRICE}</span>
             </div>
             <div>
-                <span>쿠폰 선택</span>
+                <span>{Strings.TEXT_SELECT_COUPON}</span>
             </div>
             <div>
-                <span>총 할인금액</span>
+                <span>{Strings.TEXT_DISCOUNT_PRICE}</span>
                 <div>
                 </div>
             </div>
             <div>
-                <span>총 결제금액</span>
+                <span>{Strings.TEXT_PAYMENT_PRICE}</span>
             </div>
         </StyledPayment>
     )
@@ -87,7 +87,7 @@ const CouponSelectBox = ({isAvailableCoupon,changedCouponHandler}) => {
     return (
         <div>
             <select onChange = {onChangeCoupon}>
-                <option value="none">====쿠폰 선택====</option>
+                <option value="none">{Strings.TEXT_SELECT_COUPON}</option>
                 {
                     (isAvailableCoupon && couponElm.length > 0 )?
                         couponElm
@@ -203,7 +203,7 @@ const Payment = ({products}) => {
 
     return(
         <div>
-            <PaymentTitle/>
+            <PaymentDesc/>
             <PaymentDetail products= {products}/>
         </div>
 

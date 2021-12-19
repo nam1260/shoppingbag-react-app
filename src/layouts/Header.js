@@ -3,6 +3,7 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import {useSelector} from "react-redux"
 import Styled from "styled-components"
+import * as Strings from "../resources/Strings"
 
 const MyCart = Styled.div`
 
@@ -34,7 +35,7 @@ function Header() {
             <section>
                 <div className="quickMenu">
                     <div onClick={()=>{history.push('/product')}}>
-                    <span>상품 목록</span>
+                    <span>{Strings.TEXT_PRODUCT_LIST}</span>
                     </div>
 
                     <MyCart>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Styled from "styled-components"
+import * as Strings from "../resources/Strings";
 
 
 const StyledItem = Styled.div`
@@ -81,7 +82,7 @@ const ProductInfo = ({item}) => {
                 <img src={item.detail_image_url}/>
                 <div className='prod-info-detail'>
                     <div id='item-name'>{item.item_name}</div>
-                    <div id='item-coupon'>{item.availableCoupon === false ? "[할인 제외 상품]":""}</div>
+                    <div id='item-coupon'>{item.availableCoupon === false ? Strings.TEXT_NO_DISCOUNT:""}</div>
                     <div id='item-price' >{item.price ? item.price.toLocaleString() : 0}원</div>
                 </div>
             </div>

@@ -6,9 +6,8 @@ import {useDispatch, useSelector} from "react-redux"
 import MenuTitle from "../components/MenuTitle"
 import CartItem from "../components/CartItem"
 import Payment from "../components/Payment"
+import * as Strings from "../resources/Strings"
 
-const CART_TITLE_TEXT = "MY SHOPPING BAG";
-const PAYMENT_TITLE_TEXT = "PAYMENT";
 
 const StyledCart = Styled.div`
     position: relative;
@@ -83,27 +82,27 @@ const Cart = () => {
         <div className="layout">
             <section className="container">
                 <StyledCart>
-                    <MenuTitle text={CART_TITLE_TEXT}/>
+                    <MenuTitle text={Strings.TEXT_CART_TITLE}/>
 
                     {cartItemList.length > 0 ?
                         <div>
                             <StyledCartInfo>
                                 <div id="check-box"> <input type="checkbox" checked={allChecked} onChange={onCheckedAll}/></div>
-                                <div id="prod-info">상품 정보</div>
-                                <div id="order-cnt">수량</div>
-                                <div id="price">주문금액</div>
+                                <div id="prod-info">{Strings.TEXT_PRODUCT_INFO}</div>
+                                <div id="order-cnt">{Strings.TEXT_PRODUCT_COUNT}</div>
+                                <div id="price">{Strings.TEXT_PRODUCT_PRICE}</div>
 
                             </StyledCartInfo>
                             <div>{cartItemList}</div>
                         </div>
-                        : <div>쇼핑백에 상품이 없습니다.</div>
+                        : <div>{Strings.TEXT_EMPTY_SHOPPING_BAG}</div>
                         }
                 </StyledCart>
             </section>
 
             <selection className="container">
                 <div>
-                    <MenuTitle text={PAYMENT_TITLE_TEXT}/>
+                    <MenuTitle text={Strings.TEXT_PAYMENT_TITLE}/>
                     <Payment products={validItems}/>
                 </div>
             </selection>
