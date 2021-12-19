@@ -166,8 +166,6 @@ const PaymentDetail = ({products}) => {
         if(!result) {
           setCurrentCoupon(null);
         }
-
-        console.log("checkCouponValidation = "+result);
     }
 
     const calculatePaymentPrice = () =>{
