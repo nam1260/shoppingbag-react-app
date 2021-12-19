@@ -1,7 +1,19 @@
+import "../App.css"
 import React from 'react';
 import { useHistory } from 'react-router';
 import {useSelector} from "react-redux"
-import "./Header.css"
+import Styled from "styled-components"
+
+const MyCart = Styled.div`
+
+   & > #shoppingCart-count {
+     position: absolute;
+    left: 14px;
+    top: 14px;
+    color: red;
+    font-size: 14px;
+   }
+`
 
 function Header() {
     const history = useHistory();
@@ -20,10 +32,10 @@ function Header() {
                     <span>상품 목록</span>
                     </div>
 
-                    <div>
+                    <MyCart>
                         <span id='shoppingCart-count'>{cart.length}</span>
                         <img id="shoppingCart" onClick={(e)=>{history.push('/cart')}} />
-                    </div>
+                    </MyCart>
                 </div>
             </section>
 

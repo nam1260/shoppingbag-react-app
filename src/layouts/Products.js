@@ -10,7 +10,6 @@ const ITEMS_PER_PAGE = 5;
 
 
 const Products = () => {
-    const history = useHistory();
     const [productList, setProductList] = useState([]);
     const [currentProducts, setCurrentProducts] = useState([]);
     const [pageCount, setPageCount] = useState(0);
