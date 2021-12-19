@@ -48,6 +48,10 @@ const ItemList = styled.div`
     font-size: 14px;
     color: rgb(80,80,80)
   }
+  #item-score img{
+    width: 20px;
+    height: 20px;
+  }
   
   .coupon-info {
     position: absolute;
@@ -58,8 +62,17 @@ const ItemList = styled.div`
   }
   button {
      max-width: 300px;
+     padding: 0.375rem 0.75rem;
+     border-radius: 0.25rem;
+     font-size: 1rem;
+     line-height: 1.5;
+     border: 1px solid grey;
+     color: black;
+     background: white;
   }
-  
+  button:hover {
+    cursor: pointer
+  }
   
 `
 

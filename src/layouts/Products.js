@@ -4,7 +4,6 @@ import { useHistory } from 'react-router';
 import DataManager from "../managers/DataManager"
 import ItemListComponent from "../components/ItemList"
 import Paginator from "../components/Paginator"
-import styled from 'styled-components'
 
 const ITEMS_PER_PAGE = 5;
 
