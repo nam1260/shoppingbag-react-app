@@ -38,10 +38,10 @@
 
 #### ## Libraries
 
-\* react-router, react-router-dom (페이지 라우팅)
-\* redux, redux-persist (상태관리)
-\* styled-component (컴포넌트 스타일 inline 지정)
-\* react-paginate (pagination 구현)
+* react-router, react-router-dom (페이지 라우팅)
+* redux, redux-persist (상태관리)
+* styled-component (컴포넌트 스타일 inline 지정)
+* react-paginate (pagination 구현)
 
 
 
