@@ -59,11 +59,32 @@ const StyledItem = Styled.div`
         color: blue;
      }
     
+     .prod-info-detail #item-delete {
+    
+         padding: 0.375rem 0.75rem;
+         border-radius: 0.25rem;
+         font-size: 12px;
+         font-weight: 600;
+         border: 1px solid grey;
+         box-sizing: border-box
+         color: black;
+         background: white;
+         
+           &:hover {
+            color: white;
+            background: black;
+            cursor: pointer
+            }
+     }
+    
     .price span {
     
         font-size: 26px;
         font-weight: 800;
     }
+    
+    
+    
     
 `
 
@@ -75,7 +96,7 @@ const CheckBox = ({bChecked, onCheckedBox}) => {
     )
 }
 
-const ProductInfo = ({item}) => {
+const ProductInfo = ({item,deleteItem}) => {
     return (
         <div className="prod-info">
             <div>
@@ -84,6 +105,9 @@ const ProductInfo = ({item}) => {
                     <div id='item-name'>{item.item_name}</div>
                     <div id='item-coupon'>{item.availableCoupon === false ? Strings.TEXT_NO_DISCOUNT:""}</div>
                     <div id='item-price' >{item.price ? item.price.toLocaleString() : 0}원</div>
+                    <button id='item-delete' onClick={()=>{deleteItem(item)}}>
+                        {Strings.TEXT_DELETE}
+                    </button>
                 </div>
             </div>
         </div>
@@ -113,18 +137,16 @@ const Price = ({price}) => {
 }
 
 
-const CartItem = ({item,checkedItemHandler,allChecked}) =>{
-
+const CartItem = ({item,checkedItemHandler,allChecked,deleteItem}) =>{
     const [bChecked, setChecked] = useState(true);
     const [count, setCount] = useState(1);
     const [price, setPrice] = useState(item.price);
 
-
-    const onCheckedBox =() => {
+    const onCheckedBox =useCallback(() => {
         setChecked(!bChecked);
 
-    }
-    const onClickCnt = (e) => {
+    },[bChecked])
+    const onClickCnt = useCallback((e) => {
         let currentCnt = count;
         let value = e.target.innerText;
 
@@ -138,15 +160,22 @@ const CartItem = ({item,checkedItemHandler,allChecked}) =>{
         setCount(currentCnt);
         setPrice(currentCnt * item.price);
 
-    }
+    },[count,item.price]);
 
-    const setItem =()=>{
-        item.cnt = count;
-        item.bChecked = bChecked;
+    const setItem = useCallback(()=>{
+         item.cnt = count;
+         item.bChecked = bChecked;
         checkedItemHandler();
-    }
+    },[count,bChecked,item]);
 
-    //수량 초기화
+    //목록 삭제 후 재생성 되는 경우 itemCnt 초기화
+    useEffect(()=>{
+        let currentItemCnt = item.cnt || 1;
+        setCount(currentItemCnt);
+        setPrice(currentItemCnt * item.price);
+    },[item]);
+
+
     useEffect(()=>{
         setItem();
     },[count,bChecked]);
@@ -155,10 +184,15 @@ const CartItem = ({item,checkedItemHandler,allChecked}) =>{
         setChecked(allChecked)
     },[allChecked]);
 
+    useEffect(() =>{
+        setCount(count);
+        setPrice(price);
+    },[]);
+
     return(
         <StyledItem>
             <CheckBox bChecked={bChecked} onCheckedBox={onCheckedBox}/>
-            <ProductInfo item={item}/>
+            <ProductInfo item={item} deleteItem={deleteItem}/>
             <ProductCnt onClick={onClickCnt} value={count}/>
             <Price price={price}/>
         </StyledItem>

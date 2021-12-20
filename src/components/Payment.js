@@ -199,7 +199,7 @@ const PaymentDetail = ({products}) => {
 }
 
 
-const Payment = ({products}) => {
+const Payment = ({products,cart}) => {
 
     return(
         <div>

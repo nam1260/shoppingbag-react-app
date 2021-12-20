@@ -15,3 +15,6 @@ export const TEXT_PRODUCT_PRICE = "주문 금액";
 export const TEXT_EMPTY_SHOPPING_BAG = "쇼핑백에 상품이 없습니다";
 export const TEXT_GOTO_SHOPPING = "[쇼핑 바로가기]";
 export const TEXT_PRODUCT_LIST = "상품 목록";
+export const TEXT_DELETE_ALL = "전체 삭제";
+export const TEXT_DELETE_SELECTIVE = "선택 삭제";
+export const TEXT_DELETE = "삭제";

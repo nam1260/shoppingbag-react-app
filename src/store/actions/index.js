@@ -16,11 +16,9 @@ export const deleteCart = (item) => {
 }
 
 
-export const hasItem = (item) => {
+export const clearCart = () => {
     return {
-        type: "HAS_ITEM",
-        payload: item
-
+        type: "CLEAR_ITEM"
     }
 
 }

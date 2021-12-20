@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import styled from 'styled-components'
 import {useDispatch, useSelector} from "react-redux"
-import {addCart, deleteCart, hasItem} from "../store/actions/index";
+import {addCart, deleteCart} from "../store/actions/index";
 import * as Strings from "../resources/Strings";
 
 const ItemList = styled.div`

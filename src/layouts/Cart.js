@@ -1,12 +1,14 @@
 import '../App.css';
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Styled from "styled-components"
-import {useSelector} from "react-redux"
+import {useSelector, useDispatch} from "react-redux"
+import {clearCart,deleteCart} from "../store/actions";
 import {Link} from "react-router-dom";
 import MenuTitle from "../components/MenuTitle"
 import CartItem from "../components/CartItem"
 import Payment from "../components/Payment"
 import * as Strings from "../resources/Strings"
+
 
 
 const StyledCart = Styled.div`
@@ -54,6 +56,41 @@ const StyledCartInfo = Styled.div`
  
 `
 
+const StyledDeleteBtn = Styled.button`
+  & {
+     padding: 0.375rem 0.75rem;
+     border-radius: 0.25rem;
+     font-size: 14px;
+     font-weight: 600;
+     border: 1px solid grey;
+     color: black;
+     background: white;
+  }
+  &:hover {
+    color: white;
+    background: black;
+    cursor: pointer
+  }
+`
+
+const DELETE_BUTTON_TYPE = {
+    ALL: "all",
+    SELECTIVE: "selective"
+}
+
+const DeleteButton=({type,handler})=> {
+
+    const onClickBtn = (e) => {
+        handler(type);
+    }
+
+
+    return (
+        <StyledDeleteBtn onClick={onClickBtn}>
+            {type === DELETE_BUTTON_TYPE.ALL ? Strings.TEXT_DELETE_ALL : Strings.TEXT_DELETE_SELECTIVE}
+        </StyledDeleteBtn>
+    )
+}
 
 /**
  * 장바구니 관리 페이지
@@ -63,27 +100,51 @@ const StyledCartInfo = Styled.div`
 const Cart = () => {
 
     const cart = useSelector(store=> store.cartReducer);
+    const dispatch = useDispatch();
     const [cartItemList, setCartItemList] = useState([]);
     const [validItems, setValidItems] = useState([]);
     const [allChecked, setAllChecked] = useState(true);
 
 
-    const onCheckedAll =() => {
+    const onCheckedAll =useCallback(() => {
         setAllChecked(!allChecked);
-    }
+    },[allChecked])
 
-    const checkedItemHandler = (() => {
+    const checkedItemHandler = ((changedItem) => {
             let filteredItem = cart.filter(item => item.bChecked);
             setValidItems(filteredItem)
         }
     );
 
+    //TODO 선택 삭제 로직 구현 필요
+    const deleteSelective = useCallback((selectedItem)=>{
+        dispatch(deleteCart(selectedItem));
+    },[]);
+
+    const deleteAll = useCallback(() => {
+        dispatch(clearCart());
+    }, []);
+
+    const deleteBtnHandler=((type)=>{
+            switch (type) {
+                case DELETE_BUTTON_TYPE.ALL:
+                    deleteAll();
+                    break;
+                default:
+                    break;
+            }
+    });
+
     useEffect(()=>{
          setCartItemList(cart.map((item) =>{
-            return <CartItem allChecked = {allChecked} checkedItemHandler={checkedItemHandler} item={item}/>
+            return <CartItem allChecked = {allChecked} deleteItem={deleteSelective} checkedItemHandler={checkedItemHandler} item={item}/>
         }))
 
     },[cart,allChecked]);
+
+    useEffect(()=>{
+        checkedItemHandler();
+    },[cart])
 
     return (
         <div className="layout">
@@ -101,6 +162,8 @@ const Cart = () => {
 
                             </StyledCartInfo>
                             <div>{cartItemList}</div>
+                            <DeleteButton type="all" handler={deleteBtnHandler}/>
+                            {/*<DeleteButton type="selective" handler={deleteBtnHandler}/>*/}
                         </div>
                         :
                         <div id="empty-item">
@@ -114,7 +177,7 @@ const Cart = () => {
             <selection className="container">
                 <div>
                     <MenuTitle text={Strings.TEXT_PAYMENT_TITLE}/>
-                    <Payment products={validItems}/>
+                    <Payment products={validItems} cart ={cart}/>
                 </div>
             </selection>
         </div>
