@@ -142,10 +142,14 @@ const CartItem = ({item,checkedItemHandler,allChecked,deleteItem}) =>{
     const [count, setCount] = useState(1);
     const [price, setPrice] = useState(item.price);
 
-    const onCheckedBox =useCallback(() => {
+    console.log(item.item_name)
+    console.log(item.bChecked);
+    console.log(bChecked);
+
+    const onCheckedBox =() => {
         setChecked(!bChecked);
 
-    },[bChecked])
+    }
     const onClickCnt = useCallback((e) => {
         let currentCnt = count;
         let value = e.target.innerText;
@@ -166,15 +170,15 @@ const CartItem = ({item,checkedItemHandler,allChecked,deleteItem}) =>{
          item.cnt = count;
          item.bChecked = bChecked;
         checkedItemHandler();
-    },[count,bChecked,item]);
+    },[count,bChecked]);
 
     //목록 삭제 후 재생성 되는 경우 itemCnt 초기화
     useEffect(()=>{
         let currentItemCnt = item.cnt || 1;
         setCount(currentItemCnt);
         setPrice(currentItemCnt * item.price);
+        setChecked(item.bChecked);
     },[item]);
-
 
     useEffect(()=>{
         setItem();
