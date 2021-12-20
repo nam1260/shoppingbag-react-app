@@ -31,8 +31,8 @@ function App() {
                             <Header/>
                             <Content>
                                 <Route path="/cart" exact component={Cart}/>
-                                <Route path="/product" exact component={Products}/>
-                                <Route path="/" exact component={() => <Redirect to="/product"/>}/>
+                                <Route path="/products" exact component={Products}/>
+                                <Route path="/" exact component={() => <Redirect to="/products"/>}/>
                             </Content>
 
                         </div>

@@ -168,7 +168,7 @@ const Cart = () => {
                         :
                         <div id="empty-item">
                             <span>{Strings.TEXT_EMPTY_SHOPPING_BAG}</span>
-                            <Link to="/product">{Strings.TEXT_GOTO_SHOPPING}</Link>
+                            <Link to="/products">{Strings.TEXT_GOTO_SHOPPING}</Link>
                         </div>
                         }
                 </StyledCart>

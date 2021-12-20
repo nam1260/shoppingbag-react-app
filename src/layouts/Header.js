@@ -34,7 +34,7 @@ function Header() {
 
             <section>
                 <div className="quickMenu">
-                    <div onClick={()=>{history.push('/product')}}>
+                    <div onClick={()=>{history.push('/products')}}>
                     <span>{Strings.TEXT_PRODUCT_LIST}</span>
                     </div>
 
