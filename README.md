@@ -12,7 +12,7 @@
 
 ### 1. [개발 환경](#dev-environment)
 
-### 2. [설치 및 실행 방](#architectures)
+### 2. [설치 및 실행 방법](#installation)
 
 ### 3. [Dependencies](#dependencies)
 
@@ -145,7 +145,7 @@ $> npm start
 
 <br>
 
-<h2 id="requirement">3. 과제 요구사항</h2>
+<h2 id="requirement">4. 과제 요구사항</h2>
 
 
 상세 설명 링크 (https://www.notion.so/29CM-9bc45e78c72f40369ba23358653ab089) 를 참조한다. 
@@ -156,7 +156,7 @@ $> npm start
 <br>
 
 
-<h2 id="solution">4. 구현 항목</h2>
+<h2 id="solution">5. 구현 기능</h2>
 
 ### 페이지 상단  "상품목록", "장바구니 아이콘" 을 이용하여 각 클릭 시 각 페이지 이동 가능
 ### 최상단 29CM 로고 아이콘 선택 시 /products 페이지로 redirecting 
