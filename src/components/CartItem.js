@@ -142,10 +142,6 @@ const CartItem = ({item,checkedItemHandler,allChecked,deleteItem}) =>{
     const [count, setCount] = useState(1);
     const [price, setPrice] = useState(item.price);
 
-    console.log(item.item_name)
-    console.log(item.bChecked);
-    console.log(bChecked);
-
     const onCheckedBox =() => {
         setChecked(!bChecked);
 
