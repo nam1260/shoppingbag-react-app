@@ -12,5 +12,6 @@ export const TEXT_PAYMENT_TITLE = "PAYMENT";
 export const TEXT_PRODUCT_INFO = "상품 정보";
 export const TEXT_PRODUCT_COUNT = "수량";
 export const TEXT_PRODUCT_PRICE = "주문 금액";
-export const TEXT_EMPTY_SHOPPING_BAG = "쇼핑백에 상품이 없습니다. 쇼핑 바로가기";
+export const TEXT_EMPTY_SHOPPING_BAG = "쇼핑백에 상품이 없습니다";
+export const TEXT_GOTO_SHOPPING = "[쇼핑 바로가기]";
 export const TEXT_PRODUCT_LIST = "상품 목록";

@@ -1,8 +1,8 @@
 import '../App.css';
 import React, { useState, useEffect, useMemo } from "react";
 import Styled from "styled-components"
-import {useDispatch, useSelector} from "react-redux"
-
+import {useSelector} from "react-redux"
+import {Link} from "react-router-dom";
 import MenuTitle from "../components/MenuTitle"
 import CartItem from "../components/CartItem"
 import Payment from "../components/Payment"
@@ -16,6 +16,13 @@ const StyledCart = Styled.div`
     & > div {
         position: relative;
         text-align: left;
+    }
+    
+    & > #empty-item {
+        text-align: center;
+        vertical-align: middle;
+        line-height: 80px;
+        height: 80px;
     }
 `
 
@@ -95,7 +102,11 @@ const Cart = () => {
                             </StyledCartInfo>
                             <div>{cartItemList}</div>
                         </div>
-                        : <div>{Strings.TEXT_EMPTY_SHOPPING_BAG}</div>
+                        :
+                        <div id="empty-item">
+                            <span>{Strings.TEXT_EMPTY_SHOPPING_BAG}</span>
+                            <Link to="/product">{Strings.TEXT_GOTO_SHOPPING}</Link>
+                        </div>
                         }
                 </StyledCart>
             </section>
