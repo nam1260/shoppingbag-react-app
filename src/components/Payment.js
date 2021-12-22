@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback,useMemo } from "react";
 import Styled from "styled-components"
 
 import DataManager from "../managers/DataManager"
@@ -78,7 +78,7 @@ const CouponSelectBox = ({isAvailableCoupon,changedCouponHandler}) => {
     const onChangeCoupon=(e)=>{
          let selectedCoupon = coupons.filter((coupon)=>{
              return coupon.type === e.target.value
-         })
+         });
 
         changedCouponHandler(selectedCoupon[0]);
 
@@ -110,32 +110,44 @@ const PriceBox = ({id, price}) => {
 const PaymentDetail = ({products}) => {
 
     //결제 필요 금액
-    const [totalPrice,setTotalPrice] = useState(0);
-    const [isAvailableCoupon, setIsAvailableCoupon] = useState(false);
-    const [discountPrice, setDiscountPrice] = useState(0);
-    const [paymentPrice, setPaymentPrice] = useState(0);
     const [currentCoupon, setCurrentCoupon] = useState(null);
-
-    const calculateTotalPrice = () => {
-
+    const totalPrice = useMemo(() => {
+        console.log("calculateTotalPrice");
         let totalPrice = 0;
 
         products.forEach((product)=>{
             totalPrice += (product.price * product.cnt)
         });
 
-        setTotalPrice(totalPrice);
-    }
+        return totalPrice
 
-    const calculateDiscountPrice = (selectedCoupon) => {
+    },[products]);
+
+
+    const isAvailableCoupon = useMemo(() =>{
+        console.log("isAvailableCoupon");
+        let validProduct = products.filter(product=> product.availableCoupon !== false);
+        let result = false;
+        if(validProduct.length > 0) {
+            result = true;
+        }
+        if(!result) {
+            setCurrentCoupon(null);
+        }
+        return result;
+    },[products]);
+
+
+    const discountPrice = useMemo(() => {
+        console.log("calculateDiscountPrice");
         let amount = 0;
-        if(isAvailableCoupon && selectedCoupon && selectedCoupon.type !== COUPON_TYPE.NONE) {
+        if(isAvailableCoupon && currentCoupon && currentCoupon.type !== COUPON_TYPE.NONE) {
             //쿠폰 할인 적용
             const targetProduct = products.filter(product=> product.availableCoupon !== false);
 
-            switch (selectedCoupon.type){
+            switch (currentCoupon.type){
                 case COUPON_TYPE.AMOUNT:
-                    amount = selectedCoupon.discountAmount;
+                    amount = currentCoupon.discountAmount;
                     break;
                 case COUPON_TYPE.RATE:
                     let sum = 0;
@@ -143,54 +155,31 @@ const PaymentDetail = ({products}) => {
                     targetProduct.forEach((product)=>{
                         sum += (product.price * product.cnt);
                     });
-                    amount = sum/selectedCoupon.discountRate;
+                    amount = sum/currentCoupon.discountRate;
 
                     break;
                 default:
                     break;
             }
-        }else {
-            selectedCoupon = null;
         }
-        setCurrentCoupon(selectedCoupon);
-        setDiscountPrice(Math.floor(amount))
-    }
 
-    const checkCouponValidation = () =>{
-        let validProduct = products.filter(product=> product.availableCoupon !== false);
-        let result = false;
-        if(validProduct.length > 0) {
-            result = true;
-        }
-        setIsAvailableCoupon(result);
-        if(!result) {
-          setCurrentCoupon(null);
-        }
-    }
+        return Math.floor(amount);
+    },[products,currentCoupon]);
 
-    const calculatePaymentPrice = () =>{
-        setPaymentPrice(totalPrice - discountPrice);
-    }
+    const paymentPrice = useMemo(()=>{
+        console.log("paymentPrice");return totalPrice - discountPrice},[totalPrice,discountPrice]);
 
-    useEffect(() => {
-        calculateTotalPrice();
-        checkCouponValidation();
-    },[products]);
 
-    useEffect(() => {
-        calculateDiscountPrice(currentCoupon)
-    },[products,currentCoupon,isAvailableCoupon]);
-
-    useEffect(() =>{
-        calculatePaymentPrice();
-    },[totalPrice,discountPrice]);
-
+    const onChangeCoupon = useCallback((c)=>{
+        console.log("onChangeCoupon");
+        setCurrentCoupon(c);
+    },[]);
     return (
         <StyledPayment>
             <PriceBox price = {totalPrice}/>
             <CouponSelectBox
                 isAvailableCoupon={isAvailableCoupon}
-                changedCouponHandler={calculateDiscountPrice}/>
+                changedCouponHandler={onChangeCoupon}/>
             <PriceBox id ="discountPrice" price ={discountPrice}/>
             <PriceBox id ="paymentPrice" price ={paymentPrice}/>
         </StyledPayment>

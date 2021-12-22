@@ -31,10 +31,10 @@ const Products = () => {
     }, [itemOffset,productList]);
 
 
-    const handlePageClick = (event) => {
+    const handlePageClick = useCallback((event) => {
         const newOffset = (event.selected * itemsPerPage) % productList.length;
         setItemOffset(newOffset);
-    };
+    },[itemsPerPage]);
 
 
     return (

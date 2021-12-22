@@ -1,5 +1,5 @@
 import '../App.css';
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback,useMemo } from "react";
 import Styled from "styled-components"
 import {useSelector, useDispatch} from "react-redux"
 import {clearCart,deleteCart} from "../store/actions";
@@ -101,7 +101,6 @@ const Cart = () => {
 
     const cart = useSelector(store=> store.cartReducer);
     const dispatch = useDispatch();
-    const [cartItemList, setCartItemList] = useState([]);
     const [validItems, setValidItems] = useState([]);
     const [allChecked, setAllChecked] = useState(true);
 
@@ -110,7 +109,7 @@ const Cart = () => {
         setAllChecked(!allChecked);
     },[allChecked])
 
-    const checkedItemHandler = ((changedItem) => {
+    const checkedItemHandler = (() => {
             let filteredItem = cart.filter(item => item.bChecked);
             setValidItems(filteredItem)
         }
@@ -135,12 +134,13 @@ const Cart = () => {
             }
     });
 
-    useEffect(()=>{
-         setCartItemList(cart.map((item) =>{
-            return <CartItem allChecked = {allChecked} deleteItem={deleteSelective} checkedItemHandler={checkedItemHandler} item={item}/>
-        }))
 
+    const cartItemList = useMemo(()=>{
+        return cart.map((item) =>{
+            return <CartItem allChecked = {allChecked} deleteItem={deleteSelective} checkedItemHandler={checkedItemHandler} item={item}/>
+        })
     },[cart,allChecked]);
+
 
     useEffect(()=>{
         checkedItemHandler();

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback,useMemo } from "react";
 import Styled from "styled-components"
 import * as Strings from "../resources/Strings";
 
@@ -144,7 +144,6 @@ const CartItem = ({item,checkedItemHandler,allChecked,deleteItem}) =>{
 
     const onCheckedBox =() => {
         setChecked(!bChecked);
-
     }
     const onClickCnt = useCallback((e) => {
         let currentCnt = count;
@@ -181,7 +180,7 @@ const CartItem = ({item,checkedItemHandler,allChecked,deleteItem}) =>{
     },[count,bChecked]);
 
     useEffect(() =>{
-        setChecked(allChecked)
+        setChecked(allChecked);
     },[allChecked]);
 
     useEffect(() =>{
