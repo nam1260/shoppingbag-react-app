@@ -1,7 +1,6 @@
 # shoppingbag-react-app
-29CM 프론트엔드 개발과제
 
-**29CM의 제품을 구매하는 장바구니 시스템 구현**
+** 장바구니 샘플 앱  구현**
 
 
 <br>
@@ -144,10 +143,6 @@ $> npm start
 
 <h2 id="requirement">4. 과제 요구사항</h2>
 
-
-상세 설명 링크 (https://www.notion.so/29CM-9bc45e78c72f40369ba23358653ab089) 를 참조한다. 
-
-
 <br>
 
 <br>
@@ -156,7 +151,6 @@ $> npm start
 <h2 id="solution">5. 구현 기능</h2>
 
 ### 페이지 상단  "상품목록", "장바구니 아이콘" 을 이용하여 각 클릭 시 각 페이지 이동 가능
-### 최상단 29CM 로고 아이콘 선택 시 /products 페이지로 redirecting 
 
 ### 상품 목록 페이지 (/products)
 
